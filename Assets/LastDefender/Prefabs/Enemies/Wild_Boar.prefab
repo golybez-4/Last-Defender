@@ -1639,7 +1639,7 @@ MonoBehaviour:
   <AttackRange>k__BackingField: 1
   _detectionLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 136
   _itemPrefab: {fileID: 7097654216337160814, guid: d97f674796e33ba4abbd5f3810f36fc9, type: 3}
   _droppedItems: []
   <Animator>k__BackingField: {fileID: 1294796402365433060}
