@@ -8,23 +8,27 @@ namespace Assets.LastDefender.Scripts.Runtime.Generators
 {
     public class EnemySpawner : MonoBehaviour
     {
-        [SerializeField] private EnemyStorage _enemyStorage;
+        [SerializeField] private EnemyStorage[] _enemyStorage;
         [SerializeField] private Transform _spawnPoint;
         [SerializeField] private float _spawnInterval = 5f;
+        [SerializeField] private float _waveInterval = 180f;
         [SerializeField] private int _maxEnemies = 5;
 
         private Queue<Enemy> _enemies = new Queue<Enemy>();
 
-        private ActionTimer _timer;
+        private ActionTimer _timerSpawn;
+        private ActionTimer _timerWave;
 
         private void Awake()
         {
-            _timer = new ActionTimer(SpawnEnemy, _spawnInterval);
+            _timerSpawn = new ActionTimer(SpawnEnemy, _spawnInterval);
+            _timerWave = new ActionTimer(GenerateEnemies, _waveInterval);
         }
 
         private void OnEnable()
         {
-            _timer?.Start();
+            _timerSpawn?.Start();
+          
         }
 
         private void Start()
@@ -34,7 +38,7 @@ namespace Assets.LastDefender.Scripts.Runtime.Generators
 
         private void OnDisable()
         {
-            _timer?.Stop();
+            _timerSpawn?.Stop();
         }
 
         private void GenerateEnemies()

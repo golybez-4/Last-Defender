@@ -2452,7 +2452,15 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 136
   _itemPrefab: {fileID: 7097654216337160814, guid: d97f674796e33ba4abbd5f3810f36fc9, type: 3}
-  _droppedItems: []
+  _droppedItems:
+  - <ItemData>k__BackingField: {fileID: 11400000, guid: 88243e5fdd50edf41b6829bc5276422d, type: 2}
+    <Chance>k__BackingField: 30
+    <MinAmount>k__BackingField: 1
+    <MaxAmount>k__BackingField: 1
+  - <ItemData>k__BackingField: {fileID: 11400000, guid: fe907114291782a4388eb2d412d565d1, type: 2}
+    <Chance>k__BackingField: 30
+    <MinAmount>k__BackingField: 1
+    <MaxAmount>k__BackingField: 2
   <Animator>k__BackingField: {fileID: 3734775969355451150}
   _enemyStatsRender: {fileID: 3536332831123781900}
 --- !u!54 &516602723670041119

@@ -17,7 +17,10 @@ namespace Assets.LastDefender.Scripts.Core.FSM.Enemy
             _enemy.Agent.speed = _enemy.EnemyInfo.Data.Speed;
             _enemy.Animator.Play(AnimationsState.Walk);
             Debug.Log("Entered Offensive State");
-            _enemy.Agent.SetDestination(_enemy.Waypoints[_enemy.CurrentWaypointIndex].position);
+            if (_enemy.Agent.isOnNavMesh)
+            {
+                _enemy.Agent.SetDestination(_enemy.Waypoints[_enemy.CurrentWaypointIndex].position);
+            }
         }
 
         public override void Update()
@@ -35,9 +38,12 @@ namespace Assets.LastDefender.Scripts.Core.FSM.Enemy
 
         private void Offencive()
         {
-            if (!_enemy.Agent.pathPending && _enemy.Agent.remainingDistance < 0.5f)
+            if (_enemy.Agent.isOnNavMesh)
             {
-                _enemy.CurrentWaypointIndex = (_enemy.CurrentWaypointIndex + 1) % _enemy.Waypoints.Count;
+                if (!_enemy.Agent.pathPending && _enemy.Agent.remainingDistance < 0.5f)
+                {
+                    _enemy.CurrentWaypointIndex = (_enemy.CurrentWaypointIndex + 1) % _enemy.Waypoints.Count;
+                }
             }
         }
     }

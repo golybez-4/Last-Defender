@@ -146,6 +146,7 @@ namespace Assets.LastDefender.Scripts.Runtime.EnemyScripts.Base
         {
             gameObject.SetActive(true);
             EnemyInfo.CurrentHealth = EnemyInfo.Data.Health;
+            _enemyStatsRender.Init(EnemyInfo.Data.Health);
             _stateMachine.ChangeState(OffensiveState);
         }
 
