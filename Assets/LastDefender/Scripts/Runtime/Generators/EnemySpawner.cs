@@ -18,17 +18,19 @@ namespace Assets.LastDefender.Scripts.Runtime.Generators
 
         private ActionTimer _timerSpawn;
         private ActionTimer _timerWave;
+        private int _currentWaveIndex = 0;
 
         private void Awake()
         {
             _timerSpawn = new ActionTimer(SpawnEnemy, _spawnInterval);
-            _timerWave = new ActionTimer(GenerateEnemies, _waveInterval);
+            _timerWave = new ActionTimer(ChangeWave, _waveInterval);
         }
 
         private void OnEnable()
         {
             _timerSpawn?.Start();
-          
+            _timerWave?.Start();
+
         }
 
         private void Start()
@@ -39,15 +41,16 @@ namespace Assets.LastDefender.Scripts.Runtime.Generators
         private void OnDisable()
         {
             _timerSpawn?.Stop();
+            _timerWave?.Stop();
         }
 
         private void GenerateEnemies()
         {
             for (int i = 0; i < _maxEnemies; i++)
             {
-                int index = Random.Range(0, _enemyStorage.Enemies.Count);
-                var enemy = Instantiate(_enemyStorage.Enemies[index].Prefab, _spawnPoint.position, _spawnPoint.rotation);
-                enemy.Init(_enemyStorage.Enemies[index]);
+                int index = Random.Range(0, _enemyStorage[_currentWaveIndex].Enemies.Count);
+                var enemy = Instantiate(_enemyStorage[_currentWaveIndex].Enemies[index].Prefab, _spawnPoint.position, _spawnPoint.rotation);
+                enemy.Init(_enemyStorage[_currentWaveIndex].Enemies[index]);
                 enemy.OnDie += DieEnemy;
                 enemy.gameObject.SetActive(false);
                 _enemies.Enqueue(enemy);
@@ -66,6 +69,15 @@ namespace Assets.LastDefender.Scripts.Runtime.Generators
             enemy.Spawn();
         }
 
+        private async void ChangeWave()
+        {
+            await UniTask.SwitchToMainThread();
+           
+            if (_currentWaveIndex + 1 < _enemyStorage.Length)
+                _currentWaveIndex++;
+            GenerateEnemies();
+
+        }
         private void DieEnemy(Enemy enemy)
         {
             enemy.gameObject.SetActive(false);

@@ -24,6 +24,7 @@ namespace Assets.LastDefender.Scripts.Runtime.Containers
             Container.DeclareSignal<ChangedStaminaSignal>();
             Container.DeclareSignal<CastleUpgradedSignal>();
             Container.DeclareSignal<CloseInventorySignal>();
+            Container.DeclareSignal<ChangedCastleHealthSignal>();
 
             if (_castleStorage != null)
                 Container.Bind<CastleStorage>().FromScriptableObject(_castleStorage).AsSingle().NonLazy();
